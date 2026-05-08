@@ -1,3 +1,13 @@
+## Quick start
+
+Open:
+
+notebooks/01_reproduce_paper_figures.ipynb
+
+or run:
+
+bash run_pipeline.sh
+
 # Eigenmode fingerprints of linguistic structure in cortex
 
 This repository contains code, figure-generation scripts, and reproducibility notebooks for the manuscript:
