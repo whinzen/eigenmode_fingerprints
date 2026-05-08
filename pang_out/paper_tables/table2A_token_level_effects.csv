@@ -1,0 +1,5 @@
+Metric,Within mean,Boundary mean,Δ (Boundary − Within),Cohen's d,t,p,n_within,n_boundary
+Shift,0.44,0.74,0.29,2.52,127.75,<1e-300,13876,1489
+Prediction error (AR),0.39,0.66,0.27,2.74,104.93,<1e-300,13857,1488
+Subspace exit,0.76,0.97,0.21,1.9,64.14,<1e-300,13837,1488
+Curvature,2.0,2.02,0.02,0.17,8.09,1.01e-15,13866,1487

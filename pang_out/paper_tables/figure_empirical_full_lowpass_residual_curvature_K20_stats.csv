@@ -1,0 +1,3 @@
+metric,k_low,comparison,r,r2,valid_vertices_L,valid_vertices_R
+curvature,20,empirical_vs_full_retained,0.8971649335713099,0.8049042737290276,9354,9361
+curvature,20,empirical_vs_lowpass,0.7537387797207894,0.5542473765778894,9354,9361

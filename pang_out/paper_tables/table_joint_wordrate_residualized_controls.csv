@@ -1,0 +1,5 @@
+Metric,Word rate mean β (modes 1–10),Residualized metric mean β (modes 1–10),Word rate peak mode k,Residualized metric peak mode k,Word rate peak β,Residualized metric peak β,Profile correlation (word rate vs residualized metric)
+Shift,5.269,-23.159,3,3,1.769,-8.319,-1.0
+Prediction error (AR),5.292,-27.06,3,3,1.78,-9.719,-1.0
+Subspace exit,5.292,-27.27,3,3,1.78,-9.814,-1.0
+Curvature,5.292,-28.053,3,3,1.78,-10.044,-1.0

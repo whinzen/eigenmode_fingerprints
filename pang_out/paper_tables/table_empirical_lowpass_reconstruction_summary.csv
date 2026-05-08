@@ -1,0 +1,7 @@
+Regressor,Full r,Full R²,K=20 r,K=20 R²
+Sentence shift,0.891,0.794,0.795,0.621
+Sentence boundary,0.892,0.796,0.765,0.57
+Token shift,0.898,0.807,0.757,0.56
+Prediction error,0.899,0.809,0.759,0.562
+Subspace exit,0.899,0.808,0.756,0.558
+Curvature,0.897,0.805,0.754,0.554

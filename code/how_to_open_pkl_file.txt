@@ -1,0 +1,18 @@
+python - <<EOF
+import pandas as pd
+import numpy as np
+from pathlib import Path
+
+f = Path("~/eigenmode_fingerprints/pang_out/token_embeddings_qwen/token_embeddings_qwen3_0p6b.pkl").expanduser()
+df = pd.read_pickle(f)
+
+print("shape:", df.shape)
+print("columns:", list(df.columns))
+print(df.head())
+print(df.tail())
+
+X = np.vstack(df["embedding"].values)
+print("embedding matrix:", X.shape)
+print("NaNs:", np.isnan(X).sum())
+print("first embedding shape:", df["embedding"].iloc[0].shape)
+EOF

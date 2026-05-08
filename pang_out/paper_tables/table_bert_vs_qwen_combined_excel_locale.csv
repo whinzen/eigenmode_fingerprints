@@ -1,0 +1,9 @@
+metric;label;hemi;r;rho;cosine;r_z;slope;intercept
+shift;Token shift;L;1,0;1,0;1,0;1,0;1,004;0,003
+shift;Token shift;R;1,0;1,0;1,0;1,0;1,004;0,003
+pred_error_ar;Prediction error;L;1,0;1,0;1,0;1,0;0,993;0,003
+pred_error_ar;Prediction error;R;1,0;1,0;1,0;1,0;0,992;0,003
+pred_error_subspace;Subspace exit;L;1,0;1,0;1,0;1,0;0,94;0,003
+pred_error_subspace;Subspace exit;R;1,0;1,0;1,0;1,0;0,94;0,004
+curvature;Curvature;L;1,0;1,0;1,0;1,0;0,996;0,0
+curvature;Curvature;R;1,0;1,0;1,0;1,0;0,996;0,0

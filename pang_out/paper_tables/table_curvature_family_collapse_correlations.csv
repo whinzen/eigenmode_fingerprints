@@ -1,0 +1,11 @@
+Profile 1,Profile 2,Correlation
+Global curvature,Mean turning angle,1.0
+Global curvature,Path length,1.0
+Global curvature,Chord length,1.0
+Global curvature,Original curvature (sign-flipped),0.9999
+Mean turning angle,Path length,1.0
+Mean turning angle,Chord length,1.0
+Mean turning angle,Original curvature (sign-flipped),0.9999
+Path length,Chord length,1.0
+Path length,Original curvature (sign-flipped),0.9999
+Chord length,Original curvature (sign-flipped),0.9999

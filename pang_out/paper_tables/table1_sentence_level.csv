@@ -1,0 +1,3 @@
+Regressor,Mean β (modes 1–10),Min β (modes 1–10),Max |β| (modes 1–10),Peak mode k,Peak β,Peak |β|,# significant modes (q<0.05),Highest significant mode,p_min,Profile correlation with sentence shift
+Sentence boundary,-12.52,-77.45,77.45,3,-77.45,77.45,119,119,4.253755904239828e-58,1.0
+Sentence shift,-22.62,-138.19,138.19,3,-138.19,138.19,119,119,1.5181685944043002e-62,1.0

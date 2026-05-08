@@ -1,0 +1,3 @@
+metric,k_low,comparison,r,r2,valid_vertices_L,valid_vertices_R
+token_shift,20,empirical_vs_full_retained,0.8984717632528791,0.8072509059739326,9354,9361
+token_shift,20,empirical_vs_lowpass,0.7574963133669324,0.5601901789446933,9354,9361

@@ -1,0 +1,5 @@
+Metric,Mean β (modes 1–10),Peak mode k,Peak β,# significant modes (q<0.05),Highest significant mode,Profile correlation with shift
+Shift,-27.66,3,-169.63,119,119,1.0
+Prediction error (AR),-27.4,3,-167.86,119,119,1.0
+Subspace exit,-27.65,3,-169.36,119,119,1.0
+Curvature,-28.11,3,-172.43,119,119,1.0

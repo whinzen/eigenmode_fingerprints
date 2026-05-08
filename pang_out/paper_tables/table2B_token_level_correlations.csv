@@ -1,0 +1,5 @@
+,Shift,Prediction error (AR),Subspace exit,Curvature
+Shift,1.0,0.92,0.74,0.32
+Prediction error (AR),0.92,1.0,0.86,0.02
+Subspace exit,0.74,0.86,1.0,-0.11
+Curvature,0.32,0.02,-0.11,1.0

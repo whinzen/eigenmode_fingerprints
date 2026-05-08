@@ -1,0 +1,7 @@
+Running energy extraction for run 21
+Loading BOLD file: ../ds003643_derivs/derivatives/sub-EN057/func/sub-EN057_task-lppEN_run-21_space-fsaverage5_desc-preproc_bold.l.func.gii
+Loading eigenmodes: ../eigenmodes/fsaverage5.Laplacian_L.txt
+❌ Failed to load or extract GIfTI data: No such file or no access: '../ds003643_derivs/derivatives/sub-EN057/func/sub-EN057_task-lppEN_run-21_space-fsaverage5_desc-preproc_bold.l.func.gii'
+Loading BOLD file: ../ds003643_derivs/derivatives/sub-EN057/func/sub-EN057_task-lppEN_run-21_space-fsaverage5_desc-preproc_bold.r.func.gii
+Loading eigenmodes: ../eigenmodes/fsaverage5.Laplacian_R.txt
+❌ Failed to load or extract GIfTI data: No such file or no access: '../ds003643_derivs/derivatives/sub-EN057/func/sub-EN057_task-lppEN_run-21_space-fsaverage5_desc-preproc_bold.r.func.gii'

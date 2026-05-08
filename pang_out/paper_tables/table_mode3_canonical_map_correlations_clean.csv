@@ -1,0 +1,4 @@
+Canonical map,|Pearson r| L,|Pearson r| R,|Spearman rho| L,|Spearman rho| R
+Margulies gradient 1,0.23,0.37,0.26,0.41
+Myelin (T1w/T2w),0.39,0.45,0.28,0.4
+Cortical thickness,0.39,0.35,0.27,0.16

@@ -1,0 +1,3 @@
+metric,k_low,comparison,r,r2,valid_vertices_L,valid_vertices_R
+sentence_shift,20,empirical_vs_full_retained,0.8913061234563117,0.7944266016291128,9354,9361
+sentence_shift,20,empirical_vs_lowpass,0.7954216990709921,0.6214141466933722,9354,9361

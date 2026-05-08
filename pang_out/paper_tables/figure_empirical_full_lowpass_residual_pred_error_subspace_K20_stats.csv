@@ -1,0 +1,3 @@
+metric,k_low,comparison,r,r2,valid_vertices_L,valid_vertices_R
+pred_error_subspace,20,empirical_vs_full_retained,0.8987656115543176,0.8077789920080709,9354,9361
+pred_error_subspace,20,empirical_vs_lowpass,0.756324434637694,0.5583356331236783,9354,9361

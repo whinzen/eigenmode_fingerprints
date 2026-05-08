@@ -1,0 +1,4 @@
+Metric (residualized),r (raw profile),Mean |β| (shift),Mean |β| (metric),Max |β| ratio
+Prediction error,0.996,3.6,0.14,0.03
+Subspace exit,1.0,3.6,0.68,0.18
+Curvature,1.0,3.6,0.87,0.24
