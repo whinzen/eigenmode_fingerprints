@@ -24,7 +24,23 @@ The manuscript focuses on:
 - scale-free spatial organization of cortical activity,
 - low-dimensional eigenmode structure,
 - convergence of sentence-level and token-level linguistic variables,
-- and reconstruction of cortical maps from low-order eigenmodes.
+- reconstruction of cortical maps from low-order eigenmodes,
+- hippocampal responses to linguistic updating signals,
+- and interactions between cortical, hippocampal, and midbrain systems during naturalistic language comprehension.
+
+# Top-level architecture diagram
+
+Stimulus transcripts
+        ↓
+ Linguistic regressors
+        ↓
+ Cortical eigenmodes ──────→ cortical GLMs
+        ↓
+ Hippocampal eigenmodes ───→ hippocampal GLMs
+        ↓
+      VTA / LC
+        ↓
+ Coupling analyses
 
 ---
 
@@ -285,6 +301,89 @@ pang_out/paper_figures/
 pang_out/paper_tables/
 ```
 
+## 7. Subcortical analyses
+
+The repository additionally contains a complete subcortical analysis framework located in:
+
+```text
+code/subcortex/
+```
+
+These analyses extend the cortical eigenmode framework to hippocampal and brainstem systems involved in memory updating and predictive processing during naturalistic language comprehension.
+
+The reproducibility notebook includes both the cortical analyses reported in the main manuscript and the hippocampal/VTA analyses reported in the subcortical extension of the framework.
+
+### Hippocampal analyses
+
+Representative scripts:
+
+```text
+code/subcortex/subcortex_hippocampus_compute_all.py
+code/subcortex/rebuild_glm_hipp_sentence_level.py
+code/subcortex/rebuild_glm_hipp_token_level.py
+code/subcortex/rebuild_glm_hipp_mean_signal.py
+code/subcortex/rebuild_glm_hipp_mean_signal_AP.py
+code/subcortex/hipp_compute_trajectory_features.py
+code/subcortex/rebuild_hipp_trajectory_glm_with_mean_signal_covariate.py
+```
+
+These analyses include:
+
+- hippocampal graph-eigenmode decomposition,
+- hippocampal energy-spectrum estimation,
+- sentence-level and token-level GLMs,
+- anterior–posterior hippocampal segmentation,
+- trajectory analyses in hippocampal eigenmode space,
+- and boundary-related hippocampal dynamics.
+
+### Brainstem analyses
+
+Representative scripts:
+
+```text
+code/subcortex/extract_brainstem_roi_timeseries.py
+code/subcortex/rebuild_glm_brainstem_roi.py
+code/subcortex/rebuild_glm_vta_multivariate.py
+code/subcortex/rebuild_glm_vta_to_cortical_energy.py
+code/subcortex/rebuild_glm_vta_to_cortical_energy_residualized.py
+```
+
+These analyses include:
+
+- extraction of VTA and LC ROI time series,
+- linguistic GLMs within brainstem nuclei,
+- multivariate VTA analyses,
+- and VTA–cortical coupling in cortical eigenmode space.
+
+### Coupling analyses
+
+Representative scripts:
+
+```text
+code/subcortex/compute_vta_hipp_timeseries_coupling.py
+code/subcortex/compute_vta_hipp_coupling_global_residualized.py
+code/subcortex/compute_boundary_modulated_vta_hipp_coupling.py
+code/subcortex/compare_boundary_and_vta_cortical_eigenmodes.py
+```
+
+These analyses quantify:
+
+- VTA–hippocampal coupling,
+- global-signal-controlled coupling,
+- sentence-boundary modulation of coupling,
+- and overlap between cortical sentence-boundary effects and VTA-driven cortical eigenmode profiles.
+
+### Subcortical figure generation
+
+Representative figure scripts:
+
+```text
+subcortex/plot_hippocampus_all_results_summary.py
+subcortex/plot_main_subcortical_updating_network.py
+subcortex/plot_main_vta_cortical_overlap.py
+subcortex/plot_vta_hipp_coupling_global_residualized.py
+subcortex/plot_vta_hipp_predictor_betas.py
+```
 ---
 
 # Notes

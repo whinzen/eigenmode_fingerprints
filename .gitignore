@@ -1,4 +1,49 @@
-pang_out/
+# =========================
+# Large raw datasets
+# =========================
+data/
+ds003643/
+ds003643_raw/
+ds003643_derivs/
+English/
+
+# =========================
+# Neuroimaging files
+# =========================
+*.nii
+*.nii.gz
+*.func.gii
+*.surf.gii
+*.mgz
+
+# =========================
+# Large subject-level outputs
+# =========================
+pang_out/sub-*/
+pang_out/regressors/
+pang_out/mode_energy/
+pang_out/energy/
+
+# =========================
+# Temporary / cache files
+# =========================
+__pycache__/
+.ipynb_checkpoints/
+tmp_fs/
+tmp_fs_fix/
+reg_cache/
+
+# =========================
+# macOS metadata
+# =========================
+.DS_Store
+._*
+
+# =========================
+# Local archives
+# =========================
+release_precomputed/
+*.zippang_out/
 data/
 ds003643/
 ds003643_raw/
