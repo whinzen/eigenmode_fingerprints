@@ -2,7 +2,7 @@
 
 This repository contains code, figure-generation scripts, and reproducibility notebooks for the manuscript:
 
-> **Low-dimensional cortical geometry constrains linguistic representations**
+> **Low-Dimensional Cortical Geometry Organizes Linguistic Representations and Subcortical Updating Signals**
 
 The project analyzes naturalistic fMRI responses to language by projecting cortical activity onto Laplace–Beltrami eigenmodes of the cortical surface.
 
@@ -21,9 +21,9 @@ For each subject, run, and hemisphere:
 
 The manuscript focuses on:
 
-- scale-free spatial organization of cortical activity,
+- approximately scale-free, heavy-tailed spatial organization of cortical activity,
 - low-dimensional eigenmode structure,
-- convergence of sentence-level and token-level linguistic variables,
+- convergence of sentence-level and token-level linguistic variables onto shared eigenmode profiles,
 - reconstruction of cortical maps from low-order eigenmodes,
 - hippocampal responses to linguistic updating signals,
 - and interactions between cortical, hippocampal, and midbrain systems during naturalistic language comprehension.
@@ -148,6 +148,7 @@ pang_out/group_pred_error_ar_glm/
 pang_out/group_pred_error_subspace_glm/
 pang_out/group_curvature_glm/
 pang_out/group_boundary_wordrate_content_glm/
+pang_out/standardized_beta_profiles/
 pang_out/mode3_annotations/
 pang_out/paper_tables/
 ```
@@ -280,7 +281,53 @@ These generate TR-aligned word-rate regressors and estimate both joint and resid
 
 ---
 
-## 6. Manuscript figures and tables
+## 6. Cortical spectral-envelope control
+
+Because modal energy differs substantially across cortical eigenmodes, we tested
+whether the high similarity of linguistic beta profiles could arise trivially
+from mode-dependent differences in the scale or variance of the modal-energy
+signal.
+
+Script:
+
+```text
+code/standardized_eigenmode_profiles.py
+```
+
+For each run, hemisphere, predictor, and eigenmode, the standardized effect is
+
+```text
+beta_std = beta * SD(X) / SD(E)
+```
+
+where `X` is the HRF-convolved linguistic predictor and `E = A^2` is the
+modal-energy time series. For the single-predictor models used here, this is
+equivalent to the Pearson correlation between the predictor and modal energy:
+
+```text
+beta_std = r(X, E)
+```
+
+This standardization removes mode-dependent differences in modal-energy
+variance. The resulting token-level profiles remained nearly identical across
+linguistic predictors (pairwise r = 0.9994–0.9998), indicating that their
+convergence cannot be explained by inheritance of the generic cortical
+modal-energy envelope.
+
+Outputs:
+
+```text
+pang_out/standardized_beta_profiles/
+    standardized_effects_allruns_token.csv
+    standardized_effects_subject_token.csv
+    standardized_effects_group_token.csv
+    standardized_group_profiles_token.csv
+    profile_correlations_token.csv
+```
+
+---
+
+## 7. Manuscript figures and tables
 
 Representative scripts:
 
@@ -301,7 +348,7 @@ pang_out/paper_figures/
 pang_out/paper_tables/
 ```
 
-## 7. Subcortical analyses
+## 8. Subcortical analyses
 
 The repository additionally contains a complete subcortical analysis framework located in:
 
@@ -384,6 +431,7 @@ subcortex/plot_main_vta_cortical_overlap.py
 subcortex/plot_vta_hipp_coupling_global_residualized.py
 subcortex/plot_vta_hipp_predictor_betas.py
 ```
+
 ---
 
 # Notes
@@ -433,9 +481,23 @@ Low-pass reconstructions retain only the first $begin:math:text$K$end:math:text$
 
 ## Interpretation of low-order dominance
 
-Low-order eigenmodes naturally dominate large-scale cortical activity because both cortical geometry and fMRI signals are spatially smooth.
+Low-order eigenmodes naturally capture much of large-scale cortical activity,
+and generic spatial smoothness can reproduce broad low-frequency dominance.
+However, smooth-field and analytical heat-kernel null models do not reproduce
+the empirical spectral form. Across the observed eigenmode range, the cortical
+spectrum is substantially better described by approximately scale-free or
+heavy-tailed organization than by simple exponential spectral decay.
 
-The central result of the manuscript is therefore not merely low-order dominance itself, but the structured convergence of diverse linguistic variables onto highly similar low-dimensional eigenmode profiles.
+Likewise, the convergence of linguistic beta profiles is not a trivial
+consequence of the non-uniform cortical modal-energy spectrum. Token-level
+profiles remain nearly identical after expressing effects as standardized
+coefficients that remove mode-dependent differences in modal-energy variance.
+
+These analyses distinguish the generic spectral organization of cortical
+activity from the shared mode-specific cortical response profile associated
+with linguistic variables. Whether this latter profile is specific to
+language or instead reflects a more general cortical event-response geometry
+remains an open question.
 
 ---
 
