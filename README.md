@@ -327,6 +327,28 @@ pang_out/standardized_beta_profiles/
 
 ---
 
+## 7. Spatial-scaling robustness and null models
+
+The robustness analyses underlying the revised Figure 2 are provided in:
+
+    notebooks/03_spatial_scaling_null_models.ipynb
+
+This notebook reproduces the empirical cortical eigenmode spectrum and tests
+whether its approximately scale-free, heavy-tailed form can be explained by
+generic spatial smoothness. It includes the primary power-law fit over modes
+1–60, an analytical heat-kernel spatial-smoothing null, a parametric-bootstrap
+goodness-of-fit test, explicit heat diffusion of random maps on the fsaverage5
+cortical mesh, comparison of power-law, exponential, stretched-exponential,
+and power-law-with-cutoff spectral models, participant-level model
+comparisons, and robustness analyses across alternative eigenmode fitting
+ranges.
+
+The analytical and explicit mesh-based nulls reproduce the broad low-frequency
+dominance expected from spatial smoothness, but do not reproduce the empirical
+spectral form. The analyses therefore test the stronger claim that the observed
+spectrum is not explained by generic cortical smoothness alone.
+
+---
 ## 7. Manuscript figures and tables
 
 Representative scripts:
