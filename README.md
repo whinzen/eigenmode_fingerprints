@@ -349,7 +349,7 @@ spectral form. The analyses therefore test the stronger claim that the observed
 spectrum is not explained by generic cortical smoothness alone.
 
 ---
-## 7. Manuscript figures and tables
+## 8. Manuscript figures and tables
 
 Representative scripts:
 
@@ -370,7 +370,7 @@ pang_out/paper_figures/
 pang_out/paper_tables/
 ```
 
-## 8. Subcortical analyses
+## 9. Subcortical analyses
 
 The repository additionally contains a complete subcortical analysis framework located in:
 
