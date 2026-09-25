@@ -1,0 +1,18 @@
+name: pang_vtk
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.10
+  - numpy==2.2.6
+  - nibabel
+  - nilearn
+  - scipy==1.15.2
+  - pyvista==0.46.3
+  - vtk=9.2[build=*osmesa*]
+  - libgl
+  - statsmodels
+  - pandas
+  - libglu
+  - jupyter
+  - nbconvert

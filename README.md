@@ -34,6 +34,7 @@ Raw neuroimaging data are not duplicated in this repository.
 eigenmode_fingerprints/
 ├── README.md
 ├── PRECOMPUTED_OUTPUTS.md
+├── environment.yml
 ├── reproduce_figures.sh
 ├── code/                         # upstream analysis and figure-generation code
 ├── notebooks/
