@@ -63,3 +63,4 @@ __pycache__/
 code/logs/
 code/OLD/
 .DS_Store
+notebooks/01_reproduce_paper_figures_executed.ipynb
