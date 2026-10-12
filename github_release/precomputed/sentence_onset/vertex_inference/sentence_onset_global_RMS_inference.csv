@@ -1,0 +1,2 @@
+statistic,observed_RMS,null_mean,null_sd,n_perm,n_null_ge_observed,p_one_sided_finite_null,null_type,source
+bilateral_group_map_RMS,0.0077368728815637,0.0058027706754667,0.0009428454,10000,359,0.035996400359964,coherent_sentence_boundary_bundle_circular_shift,definitive_10000_vertex_RMS_null

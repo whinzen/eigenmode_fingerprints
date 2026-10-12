@@ -1,0 +1,38 @@
+# Raw datasets and large intermediate outputs
+data/
+ds003643/
+ds003643_raw/
+ds003643_derivs/
+pang_out/
+modes/
+BrainEigenmodes/
+
+# Neuroimaging files
+*.nii
+*.nii.gz
+*.func.gii
+*.surf.gii
+*.mgz
+
+# Temporary files
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+._*
+
+# Local archives
+archive_final_audit/
+release_precomputed/
+
+# Generated outputs
+*_executed.ipynb
+reproduced_figures/
+
+# Important: Do NOT ignore *.npy.
+# The curated precomputed eigenvalues and FEM maps must be committed.
+
+# Explicitly include definitive precomputed numerical arrays
+!precomputed/
+!precomputed/**/*.npy
+!precomputed/**/*.npz
