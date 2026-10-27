@@ -1,30 +1,52 @@
 # The scale-spanning cortical geometry of language
 
-Code and manuscript-level reproducibility materials for **The scale-spanning cortical geometry of language**.
+Code, analysis provenance, and manuscript-level reproducibility materials for **The scale-spanning cortical geometry of language**.
 
-This repository accompanies analyses of naturalistic language comprehension in the *Le Petit Prince* fMRI dataset. The study asks how language-related cortical activity is organized across the spatial scales defined by the intrinsic geometry of the cortical surface, and how sentence-level processing coordinates cortical and subcortical dynamics.
+This repository accompanies a study of the spatial organization of cortical activity during naturalistic language comprehension, using the *Le Petit Prince* fMRI dataset.
+
+The central question is whether language-related cortical responses exhibit an organization across spatial scales that is captured by the intrinsic geometry of the cortical surface.
+
+We address this question using Laplace–Beltrami eigenmodes, which provide a geometry-defined spatial coordinate system ordered from cortex-wide to progressively more local patterns.
 
 ## Main analyses
 
-The manuscript addresses four linked questions:
+### 1. Empirical cortical energy spectrum
 
-1. **How is cortical activity distributed across spatial scales?**  
-   Cortical BOLD activity during narrative listening is projected onto Laplace–Beltrami eigenmodes of cortical geometry, yielding an empirical modal-energy spectrum spanning cortex-wide to progressively more local spatial patterns.
+Cortical BOLD activity during narrative listening is projected onto Laplace–Beltrami eigenmodes.
 
-2. **Where within that spectrum do validated linguistic effects lie?**  
-   Stimulus-specific temporal null tests identify four robust effects—sentence onset, sentence-level representational shift, token surprisal, and token representational curvature. Their raw partial-beta magnitude is then compared with the empirical cortical modal-energy distribution during narrative listening.
+The resulting modal-energy spectrum characterizes how ongoing cortical activity is distributed across spatial scales.
 
-3. **Do different linguistic effects share a common eigenmode geometry?**  
-   Variance-standardized partial-beta profiles are compared across the 119 nonconstant cortical eigenmodes and summarized using shape PCA.
+The eigenmode basis is determined by cortical geometry; the energy spectrum is empirical, estimated from the observed fMRI activity.
 
-4. **How does sentence processing coordinate cortex and subcortex?**  
-   Hippocampal and VTA responses, VTA–hippocampal cofluctuation, and VTA–cortical modal coordination are analyzed around sentence-level processing.
+### 2. Sentence-onset responses
 
-The term **intrinsic** refers to the geometry-defined cortical eigenmode basis. The modal-energy spectrum itself is **empirical**, estimated from BOLD activity acquired during narrative listening.
+Linguistic encoding analyses examine cortical responses associated with sentence onset during naturalistic comprehension.
+
+The manuscript-facing analyses focus on sentence onset as the validated linguistic predictor.
+
+Statistical inference includes structured temporal null models that preserve relevant properties of the narrative stimulus and its temporal organization.
+
+### 3. Preferential long-wavelength concentration
+
+We examine whether the spatial organization of sentence-onset responses is disproportionately concentrated in low-order cortical eigenmodes, relative to the empirical distribution of cortical activity.
+
+This analysis distinguishes the geometry of language-related modulation from the baseline spatial-scale distribution of ongoing BOLD activity.
+
+### 4. Geometry specificity
+
+We investigate whether the observed organization is specific to the folded cortical geometry.
+
+Analyses include comparisons with spherical eigenmodes, cross-validated functional PCA, and spatial-null inference based on spherical eigenmode surrogates.
+
+The spatial eigenstrapping analysis evaluates whether functional-subspace alignment with folded cortical eigenmodes exceeds the corresponding spatial-null distribution.
+
+This is distinct from the structured temporal permutation tests used to validate sentence-onset responses.
 
 ## Data
 
-The neuroimaging data are from the publicly available *Le Petit Prince* dataset on OpenNeuro, accession **ds003643**. The present analyses use the English-language cohort and cortical data represented on `fsaverage5`.
+The neuroimaging data are from the publicly available *Le Petit Prince* dataset, OpenNeuro accession **ds003643**.
+
+The analyses use the English-language cohort and cortical representations on `fsaverage5`.
 
 Raw neuroimaging data are not duplicated in this repository.
 
@@ -36,124 +58,156 @@ eigenmode_fingerprints/
 ├── PRECOMPUTED_OUTPUTS.md
 ├── environment.yml
 ├── reproduce_figures.sh
-├── code/                         # upstream analysis and figure-generation code
-├── notebooks/
-│   └── 01_reproduce_paper_figures.ipynb
-├── pang_out/                     # analysis outputs, including final manuscript inputs
-└── modes/                        # cortical eigenmode resources, where distributed
+├── code/                         # upstream analyses and figure-generation scripts
+├── notebooks/                    # analysis and reproduction notebooks
+├── github_release/
+│   ├── precomputed/              # curated manuscript-level results
+│   └── reproduced_figures/       # figures generated by the reproduction notebook
+├── pang_out/                     # historical and upstream analysis outputs, if available
+└── modes/                        # cortical eigenmode resources, if available
 ```
 
-`pang_out/` is a historical analysis-output tree and therefore contains both final manuscript results and earlier exploratory analyses. **`PRECOMPUTED_OUTPUTS.md` defines the canonical manuscript-facing subset.**
+The curated manuscript-facing inputs are organized under `github_release/precomputed/`.
 
-## Reproducing the manuscript figures
+The historical `pang_out/` directory contains additional upstream and exploratory outputs and is not required for the tested manuscript-level reproduction workflow.
 
-The canonical manuscript-level entry point is:
+## Reproducing the results
+
+The canonical reproduction notebook is:
 
 ```text
 notebooks/01_reproduce_paper_figures.ipynb
 ```
 
-It regenerates the numerical main figures and key summaries from the final precomputed outputs:
-
-- **Figure 1** — conceptual overview; schematic and not regenerated numerically.
-- **Figure 2** — empirical cortical modal-energy spectrum and spatial-scaling controls.
-- **Figure 3** — stimulus-specific validation and preferential long-wavelength concentration.
-- **Figure 4** — variance-standardized four-effect profiles and low-dimensional shape geometry.
-- **Figure 5** — empirical cortical maps, K=20 reconstructions, and residuals for the four validated effects.
-- **Figure 6** — validated hippocampal, VTA, and cortico-subcortical analyses.
-
-Before running the figure code, the notebook checks that its canonical inputs exist at their documented paths. It intentionally does **not** search `pang_out/` for plausible historical alternatives.
-
-To execute the complete manuscript-level notebook from the repository root:
+The tested command-line entry point is:
 
 ```bash
 bash reproduce_figures.sh
 ```
 
-The wrapper sets the repository path, executes the notebook with Jupyter `nbconvert`, and writes:
+### Installation
 
-```text
-notebooks/01_reproduce_paper_figures_executed.ipynb
+Clone the repository:
+
+    git clone https://github.com/whinzen/eigenmode_fingerprints.git
+    cd eigenmode_fingerprints
+
+Create the manuscript-level Python environment:
+
+```bash
+conda env create -f environment.yml
+conda activate eigenmode_reproduction
 ```
 
-See **`PRECOMPUTED_OUTPUTS.md`** for the exact Figure 2–6 input paths and analysis provenance.
+### Precomputed inputs
 
-### Reproducibility boundary
+All 20 inputs required by the canonical reproduction notebook are included in the Git repository. No separate release archive is needed.
 
-This is a **manuscript-level reproduction route**, not a one-command raw-data reanalysis. It regenerates the main figures and headline numerical results from precomputed outputs generated by the upstream analysis code.
 
-It does not rerun, in a single command:
+The reproduction notebook reads curated analysis products from:
 
-- raw fMRI preprocessing;
-- language-model inference and embedding extraction;
-- every subject/run-level GLM;
-- every historical robustness or exploratory analysis.
+```text
+github_release/precomputed/
+```
 
-The upstream scripts and clean analysis notebooks provide provenance for those stages. This distinction is intentional: it prevents the public reproduction route from silently depending on obsolete intermediate analyses while keeping the computational provenance available.
+The required inputs include empirical cortical energy spectra, sentence-onset validation results, vertex-space inference, cortical reconstruction summaries, concentration statistics, folded-versus-spherical comparisons, functional PCA results, and spatial-null inference.
 
-## Final linguistic effects
+These inputs must be present before running the reproduction script.
 
-The manuscript-facing cortical analyses are restricted to four independently validated effects:
+### Execution
 
-| Scale | Effect | Interpretation |
-|---|---|---|
-| Sentence | Sentence onset | onset of a new sentence |
-| Sentence | Sentence shift | representational displacement across the sentence boundary |
-| Token | Token surprisal | contextual lexical prediction error |
-| Token | Token curvature | local change in the direction of the contextual embedding trajectory |
+From the repository root:
 
-Earlier candidate token measures—including token shift, autoregressive trajectory residual, and subspace exit—remain in the historical analysis tree but are not treated as validated effects in the final manuscript.
+```bash
+bash reproduce_figures.sh
+```
+
+The wrapper executes the canonical notebook using `nbclient`, with `github_release/` as its working directory.
+
+The executed notebook is written to:
+
+```text
+github_release/01_reproduce_paper_figures_executed.ipynb
+```
+
+The notebook generates three PNG figures in:
+
+```text
+github_release/reproduced_figures/
+```
+
+These are:
+
+- `empirical_cortical_energy_spectrum.png`
+- `sentence_onset_excess_concentration.png`
+- `spatial_null_overlap.png`
+
+The notebook additionally verifies numerical results against stored reference values, including sentence-onset response magnitude, reconstruction statistics, concentration results, and spatial-null inference.
+
+The complete notebook execution and its numerical assertions have been tested successfully using the curated precomputed inputs.
+
+**The three generated PNGs are reproduction and validation outputs; they should not be confused with a complete regeneration of every publication figure.**
+
+Additional manuscript and supplementary figure-generation scripts are provided under `code/`.
 
 ## Cortical eigenmodes
 
-Cortical activity is represented in a geometry-defined Laplace–Beltrami eigenbasis on `fsaverage5`. The available basis contains 120 modes per hemisphere. The constant/global mode is excluded from the manuscript analyses, leaving **119 nonconstant modes** ordered from long-wavelength, cortex-wide patterns to progressively more local spatial patterns.
+Cortical activity is represented using a Laplace–Beltrami eigenbasis on `fsaverage5`.
 
-Figure 2 characterizes the empirical distribution of cortical modal energy during narrative listening. Figures 3–5 then ask how validated linguistic effects are organized relative to, and within, this geometry.
+The available basis contains 120 modes per hemisphere, including the approximately constant mode.
 
-## Analysis provenance
+Analyses of nonconstant spatial modes exclude mode 0, leaving 119 modes ordered from long-wavelength, cortex-wide patterns to progressively more local spatial patterns.
 
-At a high level:
+The eigenmode representation provides a common spatial coordinate system for characterizing ongoing cortical activity and language-related modulation.
 
-```text
-OpenNeuro ds003643
-        │
-        ├── cortical fMRI
-        │      └── eigenmode projection
-        │             └── empirical modal-energy spectrum ────────────── Figure 2
-        │
-        ├── linguistic regressors
-        │      ├── sentence onset / sentence shift
-        │      └── token surprisal / token curvature
-        │
-        ├── controlled eigenmode GLMs + stimulus-specific validation
-        │      ├── raw partial-beta spectral concentration ───────────── Figure 3
-        │      ├── variance-standardized profile geometry / PCA ─────── Figure 4
-        │      └── vertexwise maps + K=20 reconstruction ────────────── Figure 5
-        │
-        └── hippocampus / VTA
-               └── responses and cortical–subcortical coordination ─── Figure 6
-```
+## Statistical inference
 
-The exact precomputed inputs consumed by the manuscript reproduction notebook are documented in `PRECOMPUTED_OUTPUTS.md`.
+The repository includes several distinct inferential approaches.
+
+**Structured temporal nulls** evaluate linguistic responses while preserving relevant temporal structure in the narrative stimulus.
+
+**Spatial eigenstrapping** evaluates functional-subspace alignment with folded cortical geometry against spatially structured surrogate configurations.
+
+**Geometry comparisons** assess folded cortical eigenmodes against spherical alternatives, including analyses using FEM-weighted and uniform spatial metrics.
+
+These procedures address different questions and should not be interpreted as interchangeable statistical tests.
+
+## Reproducibility boundary
+
+The canonical notebook provides **manuscript-level reproduction from curated precomputed results**.
+
+It does not regenerate all upstream analysis products from raw neuroimaging data.
+
+In particular, the one-command workflow does not rerun:
+
+- raw fMRI preprocessing;
+- language-model inference or embedding extraction;
+- all subject- and run-level encoding models;
+- the original generation of all temporal and spatial surrogate distributions;
+- every supplementary or exploratory analysis.
+
+Where available, upstream scripts and analysis notebooks document these stages.
+
+The spatial-null reproduction notebook verifies inference using stored surrogate-derived results; it does not regenerate the 10,000 spatial surrogates.
 
 ## Software
 
-The analyses are implemented in Python and use standard scientific/neuroimaging packages including NumPy, pandas, SciPy, Matplotlib, scikit-learn, nibabel, and nilearn. Some upstream language-model analyses additionally use PyTorch and Hugging Face Transformers.
+The manuscript-level environment is specified in `environment.yml`.
 
-Because the manuscript-level notebook operates primarily on precomputed numerical outputs, its requirements are substantially lighter than those of the full upstream pipeline.
+The analyses use Python 3.10 and scientific Python packages including NumPy, pandas, SciPy, statsmodels, nibabel, nilearn, Matplotlib, Jupyter, and `nbclient`.
 
-A frozen environment or requirements file should be generated from the environment used for the final clean execution rather than inferred from the historical repository.
+Additional upstream analyses may require PyTorch, Hugging Face Transformers, PyVista/VTK, and other specialized packages.
 
 ## Code availability
 
-Code supporting the cortical and subcortical analyses reported in this study is provided in this repository. The repository contains scripts for constructing linguistic regressors, projecting cortical fMRI activity into eigenmode space, estimating modal-energy spectra and linguistic effects, performing stimulus-specific validation and spectral-concentration analyses, generating variance-standardized eigenmode profiles and cortical reconstructions, and analyzing hippocampal and VTA responses and cortical–subcortical coordination.
+The repository contains code and analysis materials for cortical eigenmode decomposition, empirical modal-energy estimation, linguistic encoding, sentence-onset validation, spatial concentration, cortical reconstruction, geometry-specificity comparisons, and spatial-null inference.
 
-The manuscript-level notebook `notebooks/01_reproduce_paper_figures.ipynb` regenerates the main numerical figures and key results from precomputed analysis outputs. The underlying *Le Petit Prince* neuroimaging data are publicly available from OpenNeuro (ds003643); large raw neuroimaging files are not duplicated here.
+Some historical scripts and notebooks document earlier analyses that are not part of the final manuscript. Their presence should not be interpreted as inclusion in the final reported results.
+
+The canonical manuscript-level reproduction workflow is defined by `reproduce_figures.sh` and `notebooks/01_reproduce_paper_figures.ipynb`.
 
 ## Citation
 
-Please cite the accompanying manuscript when using this code or derived analysis outputs. Full bibliographic details can be added here after publication or preprint release.
+Please cite the accompanying manuscript when using this code or its derived analysis outputs.
 
-## License
-
-Use the license distributed with this repository. If no repository license has yet been selected, add one before public release rather than implying a license here.
+Full bibliographic details will be added following publication or preprint release.

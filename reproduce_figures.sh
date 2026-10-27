@@ -1,47 +1,51 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Manuscript-level reproduction wrapper for:
-# "The scale-spanning cortical geometry of language"
-#
-# This executes the canonical notebook from final precomputed outputs in pang_out/.
-# It does NOT rerun raw fMRI preprocessing, language-model inference, or all upstream GLMs.
+# Reproduce the final manuscript analyses from curated precomputed outputs.
+# This does not rerun raw fMRI preprocessing or upstream model fitting.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="${SCRIPT_DIR}"
+export EIGENMODE_REPO="${SCRIPT_DIR}"
 
-NOTEBOOK="${REPO_ROOT}/notebooks/01_reproduce_paper_figures.ipynb"
-OUTPUT_DIR="${REPO_ROOT}/notebooks"
-OUTPUT_NAME="01_reproduce_paper_figures_executed.ipynb"
+python - "${SCRIPT_DIR}" <<'PY'
+import sys
+from pathlib import Path
 
-if [[ ! -f "${NOTEBOOK}" ]]; then
-    echo "ERROR: canonical notebook not found:"
-    echo "  ${NOTEBOOK}"
-    exit 1
-fi
+import nbformat
+from nbclient import NotebookClient
 
-if [[ ! -d "${REPO_ROOT}/pang_out" ]]; then
-    echo "ERROR: pang_out/ not found at repository root:"
-    echo "  ${REPO_ROOT}/pang_out"
-    echo "See PRECOMPUTED_OUTPUTS.md for required manuscript-level inputs."
-    exit 1
-fi
+repo = Path(sys.argv[1])
+release = repo / "github_release"
 
-export EIGENMODE_REPO="${REPO_ROOT}"
+source = repo / "notebooks" / "01_reproduce_paper_figures.ipynb"
+precomputed = release / "precomputed"
+output = release / "01_reproduce_paper_figures_executed.ipynb"
 
-echo "Repository: ${REPO_ROOT}"
-echo "Notebook:   ${NOTEBOOK}"
-echo
-echo "Executing manuscript-level reproduction..."
+if not source.is_file():
+    raise FileNotFoundError(f"Final notebook not found: {source}")
 
-jupyter nbconvert \
-    --to notebook \
-    --execute "${NOTEBOOK}" \
-    --output-dir="${OUTPUT_DIR}" \
-    --output="${OUTPUT_NAME}" \
-    --ExecutePreprocessor.timeout=-1
+if not precomputed.is_dir():
+    raise FileNotFoundError(
+        f"Curated precomputed outputs not found: {precomputed}"
+    )
 
-echo
-echo "Done."
-echo "Executed notebook:"
-echo "  ${OUTPUT_DIR}/${OUTPUT_NAME}"
+print(f"Notebook:    {source}", flush=True)
+print(f"Precomputed: {precomputed}", flush=True)
+print(f"Output:      {output}", flush=True)
+
+nb = nbformat.read(source, as_version=4)
+
+client = NotebookClient(
+    nb,
+    timeout=600,
+    kernel_name="python3",
+    resources={"metadata": {"path": str(release)}},
+)
+
+client.execute()
+nbformat.write(nb, output)
+
+print("\nSUCCESS: all notebook cells executed.", flush=True)
+print(f"Executed notebook: {output}", flush=True)
+print(f"Figures: {release / 'reproduced_figures'}", flush=True)
+PY

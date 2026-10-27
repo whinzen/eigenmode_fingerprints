@@ -1,357 +1,225 @@
-# Canonical precomputed outputs and manuscript dependency map
+# Canonical precomputed outputs and analysis provenance
 
-This document identifies the **canonical precomputed inputs** used to reproduce the main manuscript figures in *The scale-spanning cortical geometry of language*.
+This document describes the curated numerical inputs used to reproduce the manuscript-level results of **The scale-spanning cortical geometry of language**.
 
-The repository's `pang_out/` tree is a historical analysis-output tree. It contains both final manuscript results and superseded exploratory analyses. The existence of a file in `pang_out/` therefore does **not** imply that it contributes to the final manuscript. The paths below define the manuscript-facing subset.
+The canonical reproduction notebook is:
 
-## Scope
+`notebooks/01_reproduce_paper_figures.ipynb`
 
-- Figure 1 is conceptual/schematic and is not a numerical reproduction target.
-- Figures 2–6 are reproduced from the precomputed numerical outputs listed below.
-- The reproduction notebook should use these explicit paths rather than searching `pang_out/` for the first matching filename.
-- The global/constant cortical eigenmode is excluded; cortical analyses use 119 nonconstant modes.
-- The Figure 2 reference distribution is the **empirical cortical modal-energy spectrum during narrative listening**, not an “intrinsic cortical energy” spectrum. “Intrinsic” is reserved for the geometry-defined eigenmode basis.
+The tested command-line entry point is:
 
-## Figure 2 — Empirical cortical modal-energy spectrum and spatial-scaling controls
-
-**Definitive source notebook:** `03_spatial_scaling_null_models(1).ipynb`
-
-Primary empirical spectrum:
-
-```text
-pang_out/group/energy_spectrum_group.csv
-pang_out/group/energy_spectrum_subject.csv
+```bash
+bash reproduce_figures.sh
 ```
 
-`energy_spectrum_group.csv` supplies `mode_k`, eigenvalue `lam`, group mean modal energy `Emean`, and `Esem`. The primary log-log fit is over retained modes 1–60. `energy_spectrum_subject.csv` supports participant-level validation and robustness analyses.
+## 1. Scope
 
-Spatial-smoothing nulls:
+The final manuscript-facing analyses concern:
 
-```text
-pang_out/spatial_smoothing_null/expected_smoothing_spectra_grid.csv
-pang_out/mesh_spatial_smoothing_null/mesh_smoothing_spectra.csv
-pang_out/mesh_spatial_smoothing_null/mesh_smoothing_comparison.csv
-```
+1. The empirical distribution of cortical BOLD energy across Laplace–Beltrami eigenmodes.
+2. Validation and spatial organization of sentence-onset responses.
+3. Preferential concentration of sentence-onset responses in long-wavelength cortical modes.
+4. Specificity of functional organization to folded cortical geometry, including spatial-null inference.
 
-Spectral-model comparison and fitting-range robustness:
+Earlier analyses involving multiple linguistic predictors and subcortical responses remain available for provenance but are not part of the final manuscript reproduction workflow.
 
-```text
-pang_out/spectral_model_comparison/group_model_comparison_by_range.csv
-pang_out/spectral_model_comparison/participant_model_comparison_by_range.csv
-pang_out/spectral_model_comparison/powerlaw_vs_exponential_range_robustness.csv
-pang_out/spectral_model_comparison/participant_winner_counts_by_range.csv
-```
+The reproduction notebook uses curated numerical outputs rather than recomputing the underlying analyses from raw neuroimaging data.
 
-Canonical outputs:
+## 2. Canonical input directory
+
+All paths below are relative to:
 
 ```text
-pang_out/paper_figures/spatial_scaling_revision/figure2_revised_spatial_scaling.pdf
-pang_out/paper_figures/spatial_scaling_revision/figure2_revised_spatial_scaling.png
-pang_out/paper_figures/spatial_scaling_revision/supplementary_spatial_scaling_robustness.pdf
-pang_out/paper_figures/spatial_scaling_revision/supplementary_spatial_scaling_robustness.png
-pang_out/paper_figures/spatial_scaling_revision/supplementary_table_1_candidate_models.csv
-pang_out/paper_figures/spatial_scaling_revision/supplementary_table_1_candidate_models_formatted.csv
-pang_out/paper_figures/spatial_scaling_revision/supplementary_table_2_range_robustness.csv
-pang_out/paper_figures/spatial_scaling_revision/supplementary_table_2_range_robustness_formatted.csv
+github_release/precomputed/
 ```
 
-**Status:** the numerical inputs and final publication outputs are present in the supplied `pang_out` listing.
+The canonical notebook explicitly checks that all 20 required files exist before proceeding.
 
-## Figure 3 — Stimulus-specific validation and preferential long-wavelength concentration
-
-**Definitive cortical source notebook:** `04_qwen_continuous_context_robustness_CLEAN_20260922(3).ipynb`
-
-Figure 3 combines stimulus-specific temporal validation with raw partial-beta allocation across eigenmodes for the four effects that survived validation.
-
-Sentence-level controlled model and participant table:
+### A. Empirical cortical energy spectrum
 
 ```text
-pang_out/group_sentence_controls_exact_8pred/
-pang_out/group_sentence_controls_exact_8pred/sentence_controls_8pred_standardized_subject_level.csv
+empirical_spectrum/energy_spectrum_group_corrected_with_lambda.csv
+empirical_spectrum/energy_spectrum_subject_corrected.csv
+spectral_model_comparison/group_model_comparison_by_range.csv
 ```
 
-Sentence-onset coherent-bundle null:
+The group spectrum contains modal indices, Laplace–Beltrami eigenvalues, modal energies, and participant-level variability summaries.
+
+The eigenvalue-containing version is required for the log-log spectral fit. The reproduction notebook fits modes 1–60 and excludes the approximately constant mode 0.
+
+### B. Sentence-onset validation
 
 ```text
-pang_out/group_sentence_controls_exact_8pred/coherent_sentence_bundle_null_8pred_test/coherent_sentence_bundle_null_8pred_10000.csv
-pang_out/group_sentence_controls_exact_8pred/coherent_sentence_bundle_null_8pred_test/coherent_sentence_bundle_null_8pred_10000_summary.csv
+sentence_onset/modal_validation/coherent_sentence_bundle_null_corrected_10000_summary.csv
+sentence_onset/modal_validation/corrected_empirical_onset_pause_summary.csv
+sentence_onset/modal_validation/corrected_empirical_onset_pause_beta_star_profiles.csv
 ```
 
-Sentence-shift null:
+These files contain the empirical sentence-onset effects and the results of stimulus-specific temporal validation.
+
+The structured temporal null preserves the organization of sentence-boundary events through coherent bundle shifts.
+
+### C. Vertex-space inference
 
 ```text
-pang_out/group_sentence_controls_exact_8pred/sentence_shift_shuffle_null/sentence_shift_shuffle_null_1000.csv
-pang_out/group_sentence_controls_exact_8pred/sentence_shift_shuffle_null/sentence_shift_shuffle_null_10000_summary.csv
+sentence_onset/vertex_inference/sentence_onset_vertexwise_inference_summary.csv
+sentence_onset/vertex_inference/sentence_onset_global_RMS_inference.csv
+sentence_onset/vertex_inference/sentence_onset_beta_star_L.npy
+sentence_onset/vertex_inference/sentence_onset_beta_star_R.npy
 ```
 
-The saved 1,000-permutation shift distribution is used for display; the 10,000-permutation summary is the definitive inferential result.
+Two distinct inferential analyses are represented.
 
-Token-level upstream-of-HRF temporal validation:
+**Vertexwise FWER inference** evaluates significance across individual cortical vertices, correcting for multiple comparisons.
+
+**Global RMS inference** evaluates the overall magnitude of the bilateral sentence-onset response against a structured temporal null.
+
+The definitive global RMS inference reports:
+
+- Observed bilateral RMS: 0.0077368728815637
+- Null mean: 0.0058027706754667
+- Number of permutations: 10,000
+- Null values greater than or equal to observed: 359
+- One-sided finite-surrogate p-value: 0.035996400359964
+
+These statistics should not be confused with the minimum vertexwise FWER-corrected p-values.
+
+The RMS values reported in the vertexwise summary differ slightly from those computed from the released beta maps. They are retained as separate stored outputs; their precise computational provenance should be checked before treating them as interchangeable.
+
+### D. Sentence-onset reconstruction
 
 ```text
-pang_out/token_upstream_hrf_temporal_null_test/token_upstream_hrf_null_10000.csv
-pang_out/token_upstream_hrf_temporal_null_test/token_upstream_hrf_null_10000_summary.csv
+sentence_onset/reconstruction/sentence_onset_K20_reconstruction_summary.csv
+sentence_onset/reconstruction/sentence_onset_K20_reconstruction_L.npy
+sentence_onset/reconstruction/sentence_onset_K20_reconstruction_R.npy
 ```
 
-Only **Qwen surprisal** and **curvature** survive this validation and enter the final four-effect cortical geometry.
+These files document the reconstruction of sentence-onset cortical responses using the first 20 nonconstant cortical eigenmodes.
 
-Token surprisal and curvature final-analysis roots:
+The reproduction notebook verifies stored reconstruction statistics against frozen numerical reference values.
+
+### E. Long-wavelength concentration
 
 ```text
-pang_out/standardized_beta_profiles_qwen3_0p6b_continuous_centered_wordrate_surprisal/
-pang_out/group_qwen3_0p6b_continuous_centered_wordrate_curvature_glm/
+sentence_onset/concentration/corrected_concentration_inference_K20.csv
+sentence_onset/concentration/corrected_concentration_inference_all_K.csv
 ```
 
-Empirical cortical modal-energy reference:
+These files quantify preferential allocation of sentence-onset responses to low-order cortical eigenmodes.
+
+The analyses compare sentence-onset concentration with the empirical cortical modal-energy reference distribution.
+
+### F. Geometry specificity
 
 ```text
-pang_out/group/energy_spectrum_group.csv
-pang_out/group/energy_spectrum_subject.csv
+geometry_specificity/cortical_vs_spherical_basis_R2.csv
+geometry_specificity/onset_comparison/participant_onset_LB_vs_LOPO_PCA_bilateral.csv
+geometry_specificity/folded_vs_sphere_functional_alignment/group_PCA_folded_vs_sphere.csv
+geometry_specificity/spatial_null_eigenstrap/definitive_10000_bilateral_inference.csv
+geometry_specificity/spatial_null_eigenstrap/definitive_10000_provenance.csv
 ```
 
-Final derived concentration results:
+These results support comparisons between folded cortical eigenmodes, spherical eigenmodes, and functional PCA representations.
+
+LOPO denotes leave-one-participant-out functional PCA.
+
+The spatial-null analysis evaluates whether functional-subspace alignment with folded cortical geometry exceeds alignment expected under spherical eigenmode surrogates.
+
+This analysis is distinct from the temporal permutation tests used for sentence-onset validation.
+
+## 3. Spatial eigenstrapping
+
+The definitive spatial-null analysis uses:
+
+- 20 population functional PCA components.
+- A spherical FEM eigenmode basis containing 121 modes, including the constant mode.
+- 11 spherical eigengroups.
+- QR-based rotations within the surrogate construction.
+- FEM-weighted subspace-overlap statistics.
+- A primary comparison at K=20, with sensitivity analyses at K=5 and K=10.
+- 10,000 surrogate realizations.
+- A bilateral statistic averaging hemisphere-specific overlaps.
+
+The curated release contains the definitive inference, provenance, and stored surrogate-derived results.
+
+The canonical reproduction notebook verifies inference from these outputs. It does not regenerate the 10,000 spatial surrogates.
+
+The original surrogate-generation implementation is not currently established as part of the tested lightweight reproduction route.
+
+## 4. Additional geometry-specificity outputs
+
+The repository also contains curated results for held-out variance capture using folded and spherical eigenmodes.
+
+These include analyses under FEM-weighted and uniform spatial metrics.
+
+The associated figure-generation script is:
 
 ```text
-pang_out/validated_linguistic_effects_longwavelength/
+code/plot_figure_S3_geometry_specificity_FINAL.py
 ```
 
-Canonical outputs:
+The held-out variance-capture analyses are separate from the sentence-onset reconstruction comparison and from the functional-PCA spatial-null test.
+
+Their upstream analysis scripts require additional neuroimaging caches and geometric resources that are not included in the lightweight reproduction package.
+
+## 5. Reproduced outputs
+
+The canonical notebook writes its figures to:
 
 ```text
-pang_out/paper_figures/figure3_validation_and_longwavelength_concentration.pdf
-pang_out/paper_figures/figure3_validation_and_longwavelength_concentration.png
+github_release/reproduced_figures/
 ```
 
-**Important:** old outputs for token shift, autoregressive trajectory residual, and subspace exit remain in `pang_out/`; they are historical analyses and are not final Figure 3 effects.
-
-## Figure 4 — Low-dimensional geometry of the four validated effects
-
-**Definitive cortical source notebook:** `04_qwen_continuous_context_robustness_CLEAN_20260922(3).ipynb`
-
-The final analysis uses **variance-standardized partial beta-star profiles** from the fully controlled models. It does not use the raw-beta profiles from Figure 3.
-
-Final controlled sentence profiles:
+The tested execution generates:
 
 ```text
-pang_out/group_sentence_controls_exact_8pred/sentence_8pred_hemiavg_profiles.csv
+empirical_cortical_energy_spectrum.png
+sentence_onset_excess_concentration.png
+spatial_null_overlap.png
 ```
 
-Final controlled token profiles:
+The executed notebook is saved as:
 
 ```text
-pang_out/standardized_beta_profiles_qwen3_0p6b_continuous_centered_wordrate/standardized_group_profiles_token.csv
-pang_out/standardized_beta_profiles_qwen3_0p6b_continuous_centered_wordrate_surprisal/standardized_group_profile_surprisal.csv
+github_release/01_reproduce_paper_figures_executed.ipynb
 ```
 
-Canonical four-effect geometry outputs:
+In addition to generating these figures, the notebook validates numerical results for sentence-onset responses, reconstruction, concentration, and geometry specificity.
 
-```text
-pang_out/validated_linguistic_effects_geometry/validated_four_beta_star_profiles.csv
-pang_out/validated_linguistic_effects_geometry/validated_four_shapePCA_component_weights.csv
-pang_out/validated_linguistic_effects_geometry/validated_four_shapePCA_explained_variance.csv
-```
+These outputs constitute a numerical reproduction and validation workflow, not a complete regeneration of all publication-ready manuscript figures.
 
-Canonical outputs:
+## 6. Historical analyses
 
-```text
-pang_out/paper_figures/figure4_validated_effects_lowdimensional_geometry.pdf
-pang_out/paper_figures/figure4_validated_effects_lowdimensional_geometry.png
-```
+The historical `pang_out/` tree and several upstream notebooks contain analyses from earlier manuscript versions.
 
-PCA signs are arbitrary; the source analysis orients PC1 so sentence onset is positive and PC2 so sentence shift is positive.
+These include:
 
-## Figure 5 — K=20 cortical reconstruction of validated effects
+- sentence-shift, token-surprisal, and token-curvature analyses;
+- four-effect eigenmode-profile comparisons and shape PCA;
+- earlier cortical reconstruction figures;
+- hippocampal and VTA analyses;
+- exploratory linguistic predictors and alternative statistical models.
 
-**Definitive cortical source notebook:** `04_qwen_continuous_context_robustness_CLEAN_20260922(3).ipynb`
+These materials may be useful for tracing the development of the project, but they are not canonical dependencies of the final manuscript reproduction notebook.
 
-The final figure uses only:
+The presence of a historical output should not be interpreted as evidence that it contributes to the final reported results.
 
-```text
-sentence_onset
-sentence_shift
-token_surprisal
-token_curvature
-```
+## 7. Reproducibility boundary
 
-Canonical reconstruction root:
+The public reproduction workflow begins with curated precomputed numerical results.
 
-```text
-pang_out/validated_effects_reconstruction/
-```
+It does not, in one command, rerun:
 
-For each effect and hemisphere (`L`, `R`), the final figure loads:
+- raw fMRI preprocessing;
+- cortical eigenmode generation;
+- language-model inference;
+- subject- and run-level encoding models;
+- generation of all temporal permutation distributions;
+- generation of all spatial eigenstrapping surrogates;
+- every supplementary figure-generation analysis.
 
-```text
-<effect>/<effect>_hemi-<H>_empirical.npy
-<effect>/<effect>_hemi-<H>_low.npy
-<effect>/<effect>_hemi-<H>_residual.npy
-```
+The upstream scripts and notebooks provide additional methodological provenance where available.
 
-Reconstruction provenance additionally includes:
+The supported reproduction claim is therefore:
 
-```text
-<effect>/<effect>_hemi-<H>_full.npy
-<effect>/<effect>_hemi-<H>_coef_full.npy
-<effect>/<effect>_hemi-<H>_coef_K20.npy
-```
-
-Reconstruction statistics:
-
-```text
-pang_out/validated_effects_reconstruction/sentence_reconstruction_diagnostics.csv
-pang_out/validated_effects_reconstruction/token_reconstruction_diagnostics.csv
-pang_out/validated_effects_reconstruction/validated_four_effect_reconstruction_diagnostics.csv
-```
-
-Upstream reconstruction inputs:
-
-```text
-modes/fsaverage5/
-pang_out/vertexwise_validated_effects/sentence_8pred/
-pang_out/vertexwise_validated_effects/token_wordrate_controlled/
-```
-
-These are provenance for rebuilding the saved reconstruction arrays; the manuscript-level reproduction notebook need not recompute them.
-
-Canonical outputs:
-
-```text
-pang_out/paper_figures/figure5_validated_effects_K20_reconstruction_FINAL.pdf
-pang_out/paper_figures/figure5_validated_effects_K20_reconstruction_FINAL.png
-```
-
-**Important:** older six-effect reconstruction files for `token_shift`, `pred_error_ar`, and `pred_error_subspace` are not final Figure 5 dependencies.
-
-## Figure 6 — Subcortical and cortico-subcortical coordination
-
-**Definitive source notebook:** `05_subcortex_validated_effects_CLEAN_20260922(3).ipynb`
-
-The final Figure 6 cell explicitly reloads participant-level outputs and **does not recompute the GLMs**.
-
-Canonical root:
-
-```text
-pang_out/subcortex/validated_effects_20260921/
-```
-
-Panel A — hippocampal mean-signal responses:
-
-```text
-hippocampal_mean_signal/hipp_mean_validated_effects_participant_bilateral.csv
-```
-
-Panel B — hippocampal eigenspace responses:
-
-```text
-hippocampal_eigenspace_language/hc_eigenspace_bilateral_participant.csv
-```
-
-Panel C — VTA mean-signal responses:
-
-```text
-vta_mean_signal/vta_bilateral_participant.csv
-```
-
-Panel D — baseline VTA–hippocampal coupling:
-
-```text
-vta_hipp_coupling/vta_hc_coupling_subject_bilateral.csv
-```
-
-Panel E — sentence modulation of VTA–hippocampal cofluctuation:
-
-```text
-vta_hipp_sentence_cofluctuation/vta_hc_cofluctuation_bilateral_participant.csv
-```
-
-Panel F — sentence modulation of VTA–cortical modal cofluctuation:
-
-```text
-vta_cortical_sentence_cofluctuation/vta_cortical_sentence_cofluctuation_participant_bilateral.csv
-vta_cortical_sentence_cofluctuation/sentence_modulation_LOO_paired_participants.csv
-vta_cortical_sentence_cofluctuation/sentence_modulation_LOO_inference.csv
-```
-
-Canonical outputs:
-
-```text
-pang_out/subcortex/validated_effects_20260921/figures/Figure6_subcortical_validated_effects.pdf
-pang_out/subcortex/validated_effects_20260921/figures/Figure6_subcortical_validated_effects.png
-pang_out/subcortex/validated_effects_20260921/figures/Figure6_subcortical_validated_effects.svg
-```
-
-## Manuscript-level dependency graph
-
-```text
-Figure 2
-  group modal-energy spectrum
-      + analytical smoothing null
-      + explicit mesh smoothing null
-      + spectral-model comparison
-      -> Figure 2 + spatial-scaling supplement
-
-Figure 3
-  final 8-predictor sentence GLM
-      + sentence temporal nulls
-  continuous-context Qwen token GLMs
-      + upstream-of-HRF token temporal null
-  participant cortical modal energy
-      -> validated four effects
-      -> raw-beta profiles
-      -> cumulative long-wavelength concentration
-      -> Figure 3
-
-Figure 4
-  final controlled beta-star profiles
-      -> retain four validated effects
-      -> profile correlations
-      -> shape PCA
-      -> Figure 4
-
-Figure 5
-  controlled vertexwise partial-beta maps
-      + fsaverage5 cortical eigenmodes
-      -> full and K=20 reconstructions
-      -> saved empirical / K20 / residual maps
-      -> Figure 5
-
-Figure 6
-  validated participant-level hippocampal and VTA outputs
-      + VTA–hippocampal coupling/cofluctuation
-      + VTA–cortical modal cofluctuation
-      -> Figure 6
-```
-
-## Historical outputs that are not final manuscript dependencies
-
-The supplied `pang_out` listing contains many valid analyses from earlier stages. The final manuscript notebook should not automatically ingest:
-
-- six-effect reconstructions containing `token_shift`, `pred_error_ar`, or `pred_error_subspace`;
-- BERT-versus-Qwen development figures;
-- old token-transition figures;
-- exploratory residualized-profile analyses;
-- curvature-family diagnostics;
-- old group beta-profile PCA outputs;
-- old sentence-only reconstruction figures;
-- files under `pang_out/OLD/`;
-- Apple resource-fork files beginning `._`.
-
-They may be retained for provenance but are not canonical inputs for Figures 2–6.
-
-## Recommended reproduction policy
-
-The manuscript-facing notebook should be deliberately **thin**:
-
-1. validate that every canonical input listed above exists;
-2. load the stored numerical outputs;
-3. regenerate Figures 2–6 and headline numerical summaries;
-4. write figures to one canonical output directory;
-5. fail with a clear `FileNotFoundError` if a required input is absent.
-
-It should **not** recursively search `pang_out/` for plausible alternatives and should not rerun expensive raw-data preprocessing. Upstream notebooks/scripts remain the provenance record for producing the precomputed outputs.
-
-This supports the precise public claim:
-
-> The repository provides the upstream analysis code and a manuscript-level reproduction notebook that regenerates the main figures and key numerical results from precomputed analysis outputs.
-
-It does **not** imply that a single shell command reprocesses the raw OpenNeuro data through every upstream stage.
+> The repository provides analysis code and a tested manuscript-level notebook that regenerates selected figures and verifies key numerical results from curated precomputed analysis outputs.

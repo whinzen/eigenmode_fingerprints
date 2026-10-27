@@ -64,3 +64,48 @@ code/logs/
 code/OLD/
 .DS_Store
 notebooks/01_reproduce_paper_figures_executed.ipynb
+
+# ============================================================
+# Local / transient files
+# ============================================================
+.DS_Store
+._*
+.ipynb_checkpoints/
+Untitled*.ipynb
+*.out
+*.err
+logs/
+0
+=
+
+# Editor / OS artefacts
+*.textClipping
+
+# ============================================================
+# Large local data and generated analysis outputs
+# ============================================================
+OLD_ds003643_raw/
+pang_out/
+pang_surfaces/
+stimuli_lpp/
+stimuli_lppEN/
+BrainstemNavigatorv1.0/
+
+# Local archives / release bundles
+*.tar.gz
+*.zip
+
+# Local manuscript/internal material
+Internal notes.docx
+
+# Local environment provenance dumps
+pang_vtk_before_neuromodes.txt
+pang_vtk_before_neuromodes_pip.txt
+pang_out_filelist.txt
+
+# ============================================================
+# Historical / exploratory notebooks and code
+# Keep definitive scripts explicitly selected for release.
+# ============================================================
+code/Archive_exploratory/
+notebooks/OLD/
